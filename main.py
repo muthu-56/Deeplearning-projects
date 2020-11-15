@@ -17,11 +17,23 @@ df.dtypes
 #Geography and Gender variable encoding
 enc=pd.get_dummies(df[['Geography','Gender']], drop_first=True)
 
-#Removing the encoded variable in the existed dataframe
+#Removing the already encoded variable in the existing dataframe
 df.drop(['Gender', 'Geography'], axis=1, inplace=True)
 
-#Separating Dependent and independent feature
-X=df['Exited']
-Y = df.drop('Exited',axis=1)
+#Concat encoded variable into existing dataframe
+df = pd.concat([df,enc], axis=1)
 
-print(Y)
+#Separating Dependent and independent feature
+Y = df['Exited']
+X = df.drop('Exited',axis=1)
+
+#Splitting the dataset into train set and test set
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, Y, test_size=0.25, random_state=0)
+
+#Feature scaling
+from sklearn.preprocessing import StandardScaler
+ss = StandardScaler()
+X_train = ss.fit_transform(X_train)
+X_test = ss.transform(X_test)
+
