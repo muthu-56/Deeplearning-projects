@@ -69,3 +69,8 @@ y_pred = classifier.predict(X_test)
 #Confusion matrix
 from sklearn.metrics import confusion_matrix
 cm = confusion_matrix(y_test, y_pred)
+
+#Accuracy
+from sklearn.metrics import accuracy_score
+score = accuracy_score(y_test, y_pred)
+
